@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<template id="motley-btn">
+<link rel="stylesheet" href="stylesheets/button.css">
+      <div class="button-solid">
+        <button>
+            Submit
+        </button>
+      </div>
+</template>
+
+<motley-btn></motley-btn>
+
+<script>
+    (function() {
+        if ('registerElement' in document
+            && 'import' in document.createElement('link')
+            && 'content' in document.createElement('template')) {
+            // platform is good!
+        } else {
+            // polyfill the platform!
+            var e = document.createElement('script');
+            e.src = '/bower_components/webcomponentsjs/webcomponents-lite.min.js';
+            document.body.appendChild(e);
+        }
+    })();
+
+    const currentDocument = document.currentScript.ownerDocument;
+
+    class buttonClass extends HTMLElement {
+        constructor() {
+            super();
+
+            this.addEventListener('click', e => {
+                this.printButton();
+            });
+        }
+
+        printButton(){
+            console.log("Button is clicked");
+        }
+
+        connectedCallback() {
+            const shadowRoot = this.attachShadow({mode: 'open'});
+            const template = currentDocument.querySelector('#motley-btn');
+            const instance = template.content.cloneNode(true);
+            shadowRoot.appendChild(instance);
+        }
+
+    }
+
+    customElements.define('motley-btn', buttonClass);
+</script>
+
+</body>
+</html>

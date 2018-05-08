@@ -1,0 +1,24 @@
+@mixin font($global-font, $global-size, $global-weight) {
+  font-family: $global-font;
+  font-size: $global-size;
+  font-weight: $global-weight;
+}
+
+@mixin border-radius($radius: $global-border-radius, $moz: true, $webkit: true, $ms:true){
+  @if $moz    { -moz-border-radius:    $radius; }
+  @if $webkit { -webkit-border-radius: $radius; }
+  @if $ms     { -ms-border-radius:     $radius; }
+  border-radius: $radius;
+}
+
+@mixin textalign($textalign) {
+  @if $textalign == right {
+    text-align: right;
+  }
+  @else if $textalign == center {
+    text-align: center;
+  }
+  @else {
+    text-align: left;
+  }
+}
