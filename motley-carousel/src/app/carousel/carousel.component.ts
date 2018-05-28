@@ -2,7 +2,8 @@ import {
   Component,
   ViewEncapsulation,
   ViewChild,
-  ElementRef, AfterViewInit
+  ElementRef, AfterViewInit,
+  Input
 } from '@angular/core';
 
 
@@ -18,16 +19,29 @@ export class CarouselComponent implements AfterViewInit {
   cardArray;
   currentPos = 0;
   recurrentPos = 0;
+
+  @Input('imageArray') imageArray = [
+    {img: 'assets/a.png', alt: 'alternate'},
+    {img: 'assets/a.png', alt: 'alternate'},
+    {img: 'assets/a.png', alt: 'alternate'},
+    {img: 'assets/a.png', alt: 'alternate'}
+    ];
+
   @ViewChild('carousel') carousel: ElementRef;
+  @ViewChild('nextbtn') nextbtn: ElementRef;
+  @ViewChild('prevbtn') prevbtn: ElementRef;
+
   constructor() {
     this.element = '';
     this.cssConfig = {};
+    console.log(this.imageArray[0]);
   }
 
 
   ngAfterViewInit() {
-    console.log(this.carousel.nativeElement.childNodes);
-    this.cardArray = [].slice.call(this.carousel.nativeElement.childNodes);
+
+    this.cardArray = [].slice.call(this.carousel.nativeElement.childNodes, 1);
+    console.log(this.cardArray);
     let obj;
     this.cardArray = this.cardArray.map((card, i) => {
       obj =  {
@@ -37,24 +51,36 @@ export class CarouselComponent implements AfterViewInit {
       };
       return obj;
     });
+    this.prevbtn.nativeElement.disabled = true;
  }
 
   nextEle() {
-    this.cardArray.forEach(obj => {
-            if (obj.index > -3 && obj.index <= 1) {
-              this.translateX(obj, -100);
-            }
-            if (obj.index > 1 && obj.index <= 3) {
-              this.scaleY(obj);
-            }
+    this.prevbtn.nativeElement.disabled = false;
+      this.cardArray.forEach(obj => {
+        console.log(obj.index);
+        if(obj.index <= -1) {
+          this.nextbtn.nativeElement.disabled = true;
+        }
+        if (obj.index > -3 && obj.index <= 1) {
+          this.translateX(obj, -100);
+        }
+        if (obj.index > 1 && obj.index <= 3) {
+          this.scaleY(obj);
+        }
 
-            this.reduceIndex(obj);
-    });
+        this.reduceIndex(obj);
+      });
+
 
   }
 
   prevEle() {
+    this.nextbtn.nativeElement.disabled = false;
     this.cardArray.forEach(obj => {
+      if(obj.index >= 2) {
+        this.prevbtn.nativeElement.disabled = true;
+      }
+      console.log(obj.index);
       if (obj.index > -3 && obj.index <= 0) {
         this.retranslateX(obj);
       }

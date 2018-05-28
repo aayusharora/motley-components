@@ -1,15 +1,18 @@
-<!doctype html>
-<html lang="en">
-<head>
-  <meta charset="utf-8">
-  <title>Angular6Elements</title>
-  <base href="/">
+<!DOCTYPE html><html lang="en"><head>
+  <meta charset="UTF-8">
+  <title>Custom Button Test Page</title>
+  <script src="elements.js"></script>
+  <link rel="stylesheet" href="styles.css"></head>
 
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="icon" type="image/x-icon" href="favicon.ico">
-</head>
 <body>
-  <custom-button></custom-button>
-  <custom-carousel></custom-carousel>
+<custom-carousel [imagearray]=""></custom-carousel>
 </body>
+
+<script>
+  const carousel = document.querySelector('custom-carousel');
+  carousel.imageArray = [{img: 'assets/a.png', alt: 'alternate'},
+    {img: 'assets/a.png', alt: 'alternate'},
+    {img: 'assets/a.png', alt: 'alternate'},
+    {img: 'assets/a.png', alt: 'alternate'}]
+</script>
 </html>
