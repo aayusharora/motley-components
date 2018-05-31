@@ -8,7 +8,7 @@ import {
 
 
 @Component({
-  selector: 'custom-carousel',
+  selector: 'motley-carousel',
   templateUrl: './carousel.component.html',
   styleUrls: ['./carousel.component.scss'],
   encapsulation: ViewEncapsulation.Native
@@ -19,12 +19,13 @@ export class CarouselComponent implements AfterViewInit {
   cardArray;
   currentPos = 0;
   recurrentPos = 0;
+  count = 0;
 
   @Input('imageArray') imageArray = [
     {img: 'assets/a.png', alt: 'alternate'},
-    {img: 'assets/a.png', alt: 'alternate'},
-    {img: 'assets/a.png', alt: 'alternate'},
-    {img: 'assets/a.png', alt: 'alternate'}
+    {img: 'assets/b.png', alt: 'alternate'},
+    {img: 'assets/c.png', alt: 'alternate'},
+    {img: 'assets/d.png', alt: 'alternate'}
     ];
 
   @ViewChild('carousel') carousel: ElementRef;
@@ -84,7 +85,7 @@ export class CarouselComponent implements AfterViewInit {
       if (obj.index > -3 && obj.index <= 0) {
         this.retranslateX(obj);
       }
-      if(obj.index > 1 && obj.index <= 3) {
+      if(obj.index >= 1 && obj.index <= 3) {
         this.reScaleY(obj);
       }
 
@@ -112,12 +113,26 @@ export class CarouselComponent implements AfterViewInit {
   }
 
   reScaleY(ele) {
-    if (ele.index === 2) {
+
+    if (ele.index === 1 ) {
       ele.card.style.height = '239px';
       ele.card.style.transform = 'translateY(20%)';
       ele.card.style.transition = '.8s';
+      this.count = 1;
     }
-    if (ele.index === 3) {
+    if (ele.index === 2 ) {
+      if(this.count === 1) {
+        ele.card.style.height = '142px';
+        ele.card.style.transform = 'translateY(72%)';
+        this.count = 0;
+      }
+      else {
+        ele.card.style.height = '239px';
+        ele.card.style.transform = 'translateY(20%)';
+      }
+      ele.card.style.transition = '.8s';
+    }
+    if (ele.index === 3 ) {
       ele.card.style.height = '142px';
       ele.card.style.transform = 'translateY(72%)';
       ele.card.style.transition = '.8s';
